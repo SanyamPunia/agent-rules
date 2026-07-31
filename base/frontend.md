@@ -112,6 +112,7 @@ Never hand-roll something the project already has. Reach for the shared componen
 
 ## React and Next.js
 
+- **The installed framework version is not the one you remember.** Before writing code against a major framework, check the version in `package.json` and read the bundled docs that shipped with it (`node_modules/next/dist/docs/` for Next.js). APIs, conventions, and file structure move between majors, and training data lags. Heed deprecation notices in the installed copy over anything you recall.
 - **Functional components, named exports.** No default exports except where the framework requires one (Next.js pages, layouts, route handlers).
 - **Server components are the default.** Add `"use client"` only on interactive leaves. Never turn a whole route into a client component to use one hook, and never accidentally convert a server component by importing a client-only module into it.
 - **`next/dynamic` with `{ ssr: false }`** for client-only heavy visualizations.
@@ -169,3 +170,18 @@ How to do it:
 
 - The project exposes one combined command that runs typecheck, lint, format check, and build. Run it before any push or deploy. A green run is the gate.
 - Deploys are explicit. Never claim something is live because it was pushed.
+
+## Pre-ship checklist
+
+The highest-frequency misses. This is a fast scan, not a substitute for re-reading the rules above, which you do for every surface you touch.
+
+- [ ] Every destructive action opens a confirm dialog and never fires on first click, including inside popovers, menus, and pickers.
+- [ ] Confirm dialogs act then close: both buttons disabled while pending, dialog closes only on success.
+- [ ] Every edit is explicit and dirty-gated. Save is disabled when it would be a no-op.
+- [ ] Semantic tokens only. No raw palette, no hex, no arbitrary color values.
+- [ ] Open triggers keep their hover styling via `aria-expanded:`.
+- [ ] Icon-only and ambiguous controls have tooltips. No glyphs standing in for icons, no text separators.
+- [ ] Modals have sticky header and footer, the action row is a real footer component, popovers inside them are `modal`.
+- [ ] Loading uses a skeleton, not a string. Lists and counts follow the fetch-what-you-render rule.
+- [ ] Button heights come from the `size` prop, never an `h-*` override.
+- [ ] Checked in both light and dark.
