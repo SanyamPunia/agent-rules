@@ -1,0 +1,17 @@
+{
+  "$schema": "https://anthropic.com/claude-code/marketplace.schema.json",
+  "name": "agent-rules",
+  "description": "A shared, modular ruleset for AI coding agents.",
+  "owner": {
+    "name": "Sanyam Punia",
+    "url": "https://github.com/SanyamPunia"
+  },
+  "plugins": [
+    {
+      "name": "agent-rules",
+      "description": "Portable CLAUDE.md rule modules plus /init-rules to scaffold any project from them.",
+      "source": "./",
+      "category": "productivity"
+    }
+  ]
+}

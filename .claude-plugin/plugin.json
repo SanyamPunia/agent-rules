@@ -1,0 +1,12 @@
+{
+  "name": "agent-rules",
+  "version": "1.0.0",
+  "description": "A shared, modular ruleset for AI coding agents. Design engineering, writing style, git discipline, and data-layer rules extracted from a dozen real projects and deduplicated into modules you import instead of retype.",
+  "author": {
+    "name": "Sanyam Punia",
+    "url": "https://github.com/SanyamPunia"
+  },
+  "homepage": "https://github.com/SanyamPunia/agent-rules",
+  "license": "MIT",
+  "keywords": ["rules", "conventions", "design-system", "claude-md", "scaffolding"]
+}
