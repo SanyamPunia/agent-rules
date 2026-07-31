@@ -8,26 +8,46 @@ Works with Claude Code out of the box. The rule files are plain markdown, so Cur
 
 ## Install
 
+**Tell your agent.** Paste this and it does the rest, including reading your project and filling in the placeholders:
+
+> Set up my machine using https://github.com/SanyamPunia/agent-rules/blob/main/SETUP.md
+
+**Or one command:**
+
 ```sh
-git clone https://github.com/SanyamPunia/agent-rules.git
-cd agent-rules
-./scripts/install.sh
+curl -fsSL https://raw.githubusercontent.com/SanyamPunia/agent-rules/main/scripts/bootstrap.sh | sh
 ```
 
-That symlinks every module into `~/.claude/rules/`, writes a `~/.claude/CLAUDE.md` importing the two always-on ones, and installs the `/init-rules` command. Symlinks mean `git pull` here updates every project at once. Pass `--copy` if you would rather have real files.
+**Or as a Claude Code plugin:**
 
-An existing `~/.claude/CLAUDE.md` is backed up to `CLAUDE.md.bak` and the import block is prepended, so nothing is lost.
+```
+/plugin marketplace add SanyamPunia/agent-rules
+/plugin install agent-rules@agent-rules
+```
+
+**Or by hand:**
+
+```sh
+git clone https://github.com/SanyamPunia/agent-rules.git ~/.agent-rules
+~/.agent-rules/scripts/install.sh
+```
+
+All four end up in the same place. Every module is symlinked into `~/.claude/rules/`, a managed `~/.claude/CLAUDE.md` imports the two always-on ones, and `/init-rules` is installed. Symlinks mean `git pull` in the checkout updates every project at once. Pass `--copy` if you would rather have real files.
+
+An existing `~/.claude/CLAUDE.md` is backed up to `CLAUDE.md.bak` and the import block is prepended, so nothing is lost. Re-running is safe.
 
 ## Scaffold a project
 
+From inside your agent, `/init-rules --with typescript --with data`, which runs the script and then reads the codebase to fill in the placeholders. Or directly:
+
 ```sh
 cd ~/code/my-app
-~/path/to/agent-rules/scripts/init-rules.sh --with typescript --with data
+~/.agent-rules/scripts/init-rules.sh --with typescript --with data
 ```
 
-Or from inside Claude Code, `/init-rules --with typescript --with data`, which additionally reads the codebase and fills in the placeholders.
-
 It writes a `CLAUDE.md` that is only imports plus a short project-specific skeleton, and symlinks `AGENTS.md` to it so other tools read the same file. Use `--vendor` in a public repo to copy the rule text in rather than importing it from your home directory.
+
+**Converting a project that already has a `CLAUDE.md`?** Point your agent at [SETUP.md](SETUP.md), which has the procedure for diffing an existing file against the modules, deleting what is now redundant, and preserving real overrides instead of silently dropping them.
 
 ## Modules
 
@@ -65,12 +85,15 @@ These are preferences, not universal truths. Edit `base/base.md` before installi
 ## Layout
 
 ```
-base/           the rule modules
+base/             the rule modules
+SETUP.md          instructions written for an agent, not a human
 scripts/
-  install.sh    install into ~/.claude
-  init-rules.sh scaffold a project's CLAUDE.md
+  bootstrap.sh    curl-able one-liner, clones then installs
+  install.sh      install into ~/.claude
+  init-rules.sh   scaffold a project's CLAUDE.md
 commands/
-  init-rules.md the /init-rules slash command
+  init-rules.md   the /init-rules slash command
+.claude-plugin/   plugin and marketplace manifests
 ```
 
 ## License
